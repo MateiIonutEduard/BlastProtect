@@ -16,6 +16,12 @@ public class PlayerUnit : MonoBehaviour
     public bool respawning = false;
     public GlobalStateManager globalManager;
 
+    public void Start()
+    {
+        var mesh = GetComponentInChildren<SkinnedMeshRenderer>();
+        mesh.material = mesh.materials[PlayerId - 1];
+    }
+
     public void OnTriggerEnter(Collider other)
     {
         if (!dead && other.CompareTag("Explosion"))
