@@ -8,9 +8,8 @@ public class Brick : MonoBehaviour
     
     public void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Explosion"))
+        if (!other.CompareTag("Bomb") && other.CompareTag("Explosion"))
         {
-            Destroy(gameObject);
             Instantiate(list[3], transform.position, Quaternion.identity);
             
             if (Random.Range(0.0f, 1.0f) > 0.7f)
@@ -18,6 +17,8 @@ public class Brick : MonoBehaviour
                 int index = Random.Range(0, 3);
                 Instantiate(list[index], transform.position, Quaternion.identity);
             }
+
+            Destroy(gameObject);
         }
     }
 }

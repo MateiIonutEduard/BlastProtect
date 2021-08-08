@@ -36,6 +36,9 @@ public class LoadMap : MonoBehaviour
             var unit = player.GetComponent<PlayerUnit>();
             unit.PlayerId = i;
 
+            if ((i & 1) == 0)
+                player.transform.rotation = Quaternion.Euler(new Vector3(0f, 180f, 0f));
+
             if (i != PlayerId)
             {
                 player.GetComponent<PlayerController>().enabled = false;

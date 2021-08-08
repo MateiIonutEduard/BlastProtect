@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerUnit : MonoBehaviour
 {
-    [Range(1, 8)]
+    [Range(1, 4)]
     public int PlayerId;
     public float moveSpeed = 5f;
     public int bombs = 2;
