@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using System.Collections.Generic;
 using System.Collections;
-using System;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rigidBody;
     private Transform myTransform;
     private Animator animator;
+    private List<Bomb> bombs;
 
     public void Start()
     {
@@ -19,6 +21,7 @@ public class PlayerController : MonoBehaviour
         rigidBody = GetComponent<Rigidbody>();
         myTransform = transform;
         animator = myTransform.Find("PlayerModel").GetComponent<Animator>();
+        bombs = FindObjectOfType<LoadMap>().BombList;
     }
 
     public void Update()
@@ -85,6 +88,9 @@ public class PlayerController : MonoBehaviour
 
             obj.GetComponent<Bomb>().explode_size = player.explosion_power;
             obj.GetComponent<Bomb>().player = player;
+
+            var bomb = obj.GetComponent<Bomb>();
+            bombs.Add(bomb);
 
             if(player.canKick) obj.GetComponent<Rigidbody>().isKinematic = false;
         }

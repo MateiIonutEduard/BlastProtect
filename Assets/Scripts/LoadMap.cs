@@ -6,7 +6,7 @@ public class LoadMap : MonoBehaviour
 {
     public GameObject[] list;
     public GameObject Player;
-
+    public List<Bomb> BombList;
     private GameObject blocks;
     private GameObject floor;
 
@@ -15,6 +15,7 @@ public class LoadMap : MonoBehaviour
 
     public void Awake()
     {
+        BombList = new List<Bomb>();
         blocks = transform.GetChild(0).gameObject;
         floor = transform.GetChild(1).gameObject;
         LoadGame();
