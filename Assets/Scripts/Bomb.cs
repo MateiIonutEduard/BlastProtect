@@ -60,7 +60,7 @@ public class Bomb : MonoBehaviour
             else
             {
                 if (hit.collider.CompareTag("Breakable"))
-                    Destroy(hit.collider.gameObject);
+                    list.Add(transform.position + (i * direction));
                 else if (hit.collider.CompareTag("Player") || hit.collider.CompareTag("PowerUp") || hit.collider.CompareTag("Bomb"))
                 {
                     list.Add(transform.position + (i * direction));
@@ -73,7 +73,7 @@ public class Bomb : MonoBehaviour
 
         foreach (Vector3 position in list)
         {
-            Instantiate(explosionPrefab, position, explosionPrefab.transform.rotation);
+            var obj = Instantiate(explosionPrefab, position, explosionPrefab.transform.rotation);
             yield return new WaitForSeconds(.05f);
         }
     }

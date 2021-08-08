@@ -11,6 +11,7 @@ public class PlayerUnit : MonoBehaviour
 
     public bool canKick = false;
     public int explosion_power = 2;
+    public Material[] Materials;
 
     public bool dead = false;
     public bool respawning = false;
@@ -19,7 +20,7 @@ public class PlayerUnit : MonoBehaviour
     public void Start()
     {
         var mesh = GetComponentInChildren<SkinnedMeshRenderer>();
-        mesh.material = mesh.materials[PlayerId - 1];
+        mesh.material = Materials[PlayerId - 1];
     }
 
     public void OnTriggerEnter(Collider other)
