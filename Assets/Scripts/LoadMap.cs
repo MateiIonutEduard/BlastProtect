@@ -6,7 +6,6 @@ public class LoadMap : MonoBehaviour
 {
     public GameObject[] list;
     public GameObject Player;
-    public FollowPlayer Follow;
 
     private GameObject blocks;
     private GameObject floor;
@@ -23,14 +22,19 @@ public class LoadMap : MonoBehaviour
 
     public void Start()
     {
-        var array = new Vector3[] { 
+        AddPlayers();
+    }
+
+    private void AddPlayers()
+    {
+        var array = new Vector3[] {
             new Vector3(1f, 0.5f, 1f),
             new Vector3(1f, 0.5f, 11f),
             new Vector3(11f, 0.5f, 1f),
             new Vector3(11f, 0.5f, 11f)
         };
 
-        for(int i = 1; i <= Players; i++)
+        for (int i = 1; i <= Players; i++)
         {
             var player = Instantiate(Player, array[i - 1], Quaternion.identity);
             var unit = player.GetComponent<PlayerUnit>();
@@ -47,7 +51,9 @@ public class LoadMap : MonoBehaviour
             else
             {
                 var obj = player.GetComponent<PlayerController>();
-                Follow.player = obj;
+                var follow = FindObjectOfType<FollowPlayer>();
+                follow.player = obj;
+                follow.offset = new Vector3(-1, 9, -4);
             }
         }
     }

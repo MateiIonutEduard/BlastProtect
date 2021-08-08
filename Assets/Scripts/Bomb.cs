@@ -60,7 +60,7 @@ public class Bomb : MonoBehaviour
             else
             {
                 if (hit.collider.CompareTag("Breakable"))
-                    list.Add(transform.position + (i * direction));
+                    hit.collider.gameObject.SetActive(false);
                 else if (hit.collider.CompareTag("Player") || hit.collider.CompareTag("PowerUp") || hit.collider.CompareTag("Bomb"))
                 {
                     list.Add(transform.position + (i * direction));
