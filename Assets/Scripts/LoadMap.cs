@@ -34,9 +34,9 @@ public class LoadMap : MonoBehaviour
     {
         var array = new Vector3[] {
             new Vector3(1f, 0.5f, 1f),
+            new Vector3(size - 2, 0.5f, size - 2),
             new Vector3(1f, 0.5f, size - 2),
             new Vector3(size - 2, 0.5f, 1f),
-            new Vector3(size - 2, 0.5f, size - 2)
         };
 
         for (int i = 1; i <= Players; i++)
