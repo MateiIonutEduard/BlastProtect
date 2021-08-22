@@ -8,4 +8,10 @@ public class GameMenu : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+            Application.Quit();
+    }
 }
