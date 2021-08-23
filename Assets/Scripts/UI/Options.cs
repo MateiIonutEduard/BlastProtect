@@ -27,6 +27,16 @@ public class Options : MonoBehaviour
         SetState(1);
     }
 
+    public void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            gameObject.SetActive(false);
+            var obj = transform.parent.GetChild(0);
+            obj.gameObject.SetActive(true);
+        }
+    }
+
     public void OnMusicEnable()
     {
         if (music != 0f) music = -music;
