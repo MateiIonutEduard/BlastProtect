@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 public class Window : MonoBehaviour
 {
+    public GameObject GameBoard;
     public GameObject OptionsWindow;
     private bool IsActive;
 
@@ -16,6 +17,7 @@ public class Window : MonoBehaviour
     {
         IsActive = false;
         OptionsWindow.SetActive(IsActive);
+        GameBoard.SetActive(!IsActive);
     }
 
     public void Update()
@@ -24,6 +26,7 @@ public class Window : MonoBehaviour
         {
             IsActive = !IsActive;
             OptionsWindow.SetActive(IsActive);
+            GameBoard.SetActive(!IsActive);
         }
     }
 }
