@@ -11,6 +11,9 @@ public class ShowPanel : MonoBehaviour
 
     public void Start()
     {
+        int id = PlayerPrefs.GetInt("RoundId");
+        if (id == 0) id = 1;
+        round.text = $"Round {id}";
         elapsedTime = 1f;
         canShow = true;
     }

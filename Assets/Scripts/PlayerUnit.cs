@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerUnit : MonoBehaviour
 {
-    [Range(1, 4)]
+    [Range(1, 8)]
     public int PlayerId;
     public float moveSpeed = 5f;
     public int bombs = 2;
@@ -15,10 +15,11 @@ public class PlayerUnit : MonoBehaviour
 
     public bool dead = false;
     public bool respawning = false;
-    public GlobalStateManager globalManager;
+    public Gameplay gameplay;
 
     public void Start()
     {
+        gameplay = FindObjectOfType<Gameplay>();
         var mesh = GetComponentInChildren<SkinnedMeshRenderer>();
         mesh.material = Materials[PlayerId - 1];
     }
@@ -28,7 +29,7 @@ public class PlayerUnit : MonoBehaviour
         if (!dead && other.CompareTag("Explosion"))
         {
             dead = true;
-            globalManager.PlayerDied(PlayerId);
+            gameplay.KillAgent(PlayerId);
             Destroy(gameObject);
         }
     }

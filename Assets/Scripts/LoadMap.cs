@@ -28,6 +28,7 @@ public class LoadMap : MonoBehaviour
     public void Start()
     {
         AddPlayers();
+        FindObjectOfType<Gameplay>().GameStart();
     }
 
     private void AddPlayers()
@@ -52,7 +53,7 @@ public class LoadMap : MonoBehaviour
             {
                 player.GetComponent<PlayerController>().enabled = false;
                 player.GetComponent<EnemyController>().enabled = true;
-                player.GetComponent<EnemyController>().mode = (PlayerType)Random.Range(0, 5);
+                player.GetComponent<EnemyController>().mode = (PlayerType)Random.Range(0, 4);
             }
             else
             {
