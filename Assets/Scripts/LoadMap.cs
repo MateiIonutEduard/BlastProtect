@@ -22,6 +22,10 @@ public class LoadMap : MonoBehaviour
         BombList = new List<Bomb>();
         blocks = transform.GetChild(0).gameObject;
         floor = transform.GetChild(1).gameObject;
+        Players = PlayerPrefs.GetInt("players");
+
+        if (Players == 0) Application.Quit(0);
+        size = Players <= 4 ? 13 : 15;
         LoadGame();
     }
 
@@ -33,11 +37,18 @@ public class LoadMap : MonoBehaviour
 
     private void AddPlayers()
     {
+        int half = size >> 1;
+
         var array = new Vector3[] {
             new Vector3(1f, 0.5f, 1f),
-            new Vector3(size - 2, 0.5f, size - 2),
             new Vector3(1f, 0.5f, size - 2),
             new Vector3(size - 2, 0.5f, 1f),
+            new Vector3(size - 2, 0.5f, size - 2),
+
+            new Vector3(1f, 0.5f, half),
+            new Vector3(half, 0.5f, 1f),
+            new Vector3(half, 0.5f, size - 2),
+            new Vector3(size - 2, 0.5f, half)
         };
 
         for (int i = 1; i <= Players; i++)
@@ -65,6 +76,25 @@ public class LoadMap : MonoBehaviour
         }
     }
 
+    private Vector2[] FindLocation(Vector2 pos)
+    {
+        int[] v = new int[] { -1, 0, 1 };
+        var list = new List<Vector2>();
+
+        for(int i = 0; i < v.Length; i++)
+        {
+            for(int j = 0; j < v.Length; j++)
+            {
+                var point = new Vector2(pos.x + v[i], pos.y + v[j]);
+
+                if (point.x > 0 && point.y > 0)
+                    list.Add(point);
+            }
+        }
+
+        return list.ToArray();
+    }
+
     private void LoadGame()
     {
         for(int i = 0; i < size; i++)
@@ -76,24 +106,20 @@ public class LoadMap : MonoBehaviour
             }
         }
 
+        int half = size >> 1;
         map = new Block[size * size];
+
         var temp = new Vector2[]
         {
             new Vector2(1f, 1f),
-            new Vector2(1f, 2f),
-            new Vector2(2f, 1f),
-
             new Vector2(1f, size - 2),
-            new Vector2(1f, size - 3),
-            new Vector2(2f, size - 2),
-
             new Vector2(size - 2, 1f),
-            new Vector2(size - 2, 2f),
-            new Vector2(size - 3,  1f),
-
             new Vector2(size - 2, size - 2),
-            new Vector2(size - 2, size - 3),
-            new Vector2(size - 3, size - 2)
+
+            new Vector2(1f, half),
+            new Vector2(half, 1f),
+            new Vector2(half, size - 2),
+            new Vector2(size - 2, half)
         };
 
         for(int i = 0; i < size; i++)
@@ -107,9 +133,14 @@ public class LoadMap : MonoBehaviour
 
         for(int i = 0; i < temp.Length; i++)
         {
-            int x = Mathf.RoundToInt(temp[i].x);
-            int y = Mathf.RoundToInt(temp[i].y);
-            map[x * size + y] = Block.Born;
+            var list = FindLocation(temp[i]);
+
+            for (int j = 0; j < list.Length; j++)
+            {
+                int x = Mathf.RoundToInt(list[j].x);
+                int y = Mathf.RoundToInt(list[j].y);
+                map[x * size + y] = Block.Born;
+            }
         }
 
         for(int i = 0; i < size; i++)
