@@ -87,6 +87,6 @@ public class Gameplay : MonoBehaviour
         deaths++;
         int index = PlayerId - 1;
         if (!state[index]) state[index] = true;
-        if (deaths == state.Length - 1) GameEnd();
+        if (deaths >= state.Length - 1) GameEnd();
     }
 }
