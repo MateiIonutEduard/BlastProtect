@@ -12,6 +12,10 @@ public class PlayerController : MonoBehaviour
     public GameObject bombPrefab;
     private Rigidbody rigidBody;
     private Transform myTransform;
+
+    private DynamicJoystick joystick;
+    private ActionJoystick action;
+
     private Animator animator;
     private List<Bomb> bombs;
 
@@ -20,8 +24,23 @@ public class PlayerController : MonoBehaviour
         player = GetComponent<PlayerUnit>();
         rigidBody = GetComponent<Rigidbody>();
         myTransform = transform;
+
         animator = myTransform.Find("PlayerModel").GetComponent<Animator>();
         bombs = FindObjectOfType<LoadMap>().BombList;
+        action = FindObjectOfType<ActionJoystick>();
+        joystick = FindObjectOfType<DynamicJoystick>();
+    }
+
+    private bool GetKey(Joypad key)
+    {
+        if (joystick != null) return joystick.GetKey(key);
+        else return false;
+    }
+
+    private bool GetActionKey()
+    {
+        if (action != null) return action.GetActionKey();
+        else return false;
     }
 
     public void Update()
@@ -41,35 +60,35 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     private void UpdateMovement()
     {
-        if (Input.GetKey (KeyCode.UpArrow))
+        if (Input.GetKey (KeyCode.UpArrow) || GetKey(Joypad.UpArrow))
         {
             rigidBody.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.y, player.moveSpeed);
             myTransform.rotation = Quaternion.Euler (0, 0, 0);
             animator.SetBool ("Walking", true);
         }
 
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.LeftArrow) || GetKey(Joypad.LeftArrow))
         {
             rigidBody.velocity = new Vector3 (-player.moveSpeed, rigidBody.velocity.y, rigidBody.velocity.z);
             myTransform.rotation = Quaternion.Euler (0, 270, 0);
             animator.SetBool ("Walking", true);
         }
 
-        if (Input.GetKey(KeyCode.DownArrow))
+        if (Input.GetKey(KeyCode.DownArrow) || GetKey(Joypad.DownArrow))
         {
             rigidBody.velocity = new Vector3(rigidBody.velocity.x, rigidBody.velocity.y, -player.moveSpeed);
             myTransform.rotation = Quaternion.Euler(0, 180, 0);
             animator.SetBool("Walking", true);
         }
 
-        if (Input.GetKey (KeyCode.RightArrow))
+        if (Input.GetKey (KeyCode.RightArrow) || GetKey(Joypad.RightArrow))
         {
             rigidBody.velocity = new Vector3(player.moveSpeed, rigidBody.velocity.y, rigidBody.velocity.z);
             myTransform.rotation = Quaternion.Euler(0, 90, 0);
             animator.SetBool("Walking", true);
         }
 
-        if (canDropBombs && Input.GetKeyDown(KeyCode.Space))
+        if (canDropBombs && (Input.GetKeyDown(KeyCode.Space) || GetActionKey()))
             DropBomb();
     }
 
