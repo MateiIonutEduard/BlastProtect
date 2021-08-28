@@ -47,6 +47,7 @@ public class LoadMap : MonoBehaviour
 
             new Vector3(1f, 0.5f, half),
             new Vector3(half, 0.5f, 1f),
+            new Vector3(half, 0.5f, half),
             new Vector3(half, 0.5f, size - 2),
             new Vector3(size - 2, 0.5f, half)
         };
@@ -118,6 +119,7 @@ public class LoadMap : MonoBehaviour
 
             new Vector2(1f, half),
             new Vector2(half, 1f),
+            new Vector2(half, half),
             new Vector2(half, size - 2),
             new Vector2(size - 2, half)
         };
