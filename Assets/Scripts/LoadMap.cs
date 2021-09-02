@@ -41,15 +41,16 @@ public class LoadMap : MonoBehaviour
 
         var array = new Vector3[] {
             new Vector3(1f, 0.5f, 1f),
+            new Vector3(size - 2, 0.5f, size - 2),
             new Vector3(1f, 0.5f, size - 2),
             new Vector3(size - 2, 0.5f, 1f),
-            new Vector3(size - 2, 0.5f, size - 2),
+
+            new Vector3(half, 0.5f, half),
 
             new Vector3(1f, 0.5f, half),
             new Vector3(half, 0.5f, 1f),
-            new Vector3(half, 0.5f, half),
-            new Vector3(half, 0.5f, size - 2),
-            new Vector3(size - 2, 0.5f, half)
+            new Vector3(size - 2, 0.5f, half),
+            new Vector3(half, 0.5f, size - 2)
         };
 
         for (int i = 1; i <= Players; i++)
@@ -113,15 +114,16 @@ public class LoadMap : MonoBehaviour
         var temp = new Vector2[]
         {
             new Vector2(1f, 1f),
+            new Vector2(size - 2, size - 2),
             new Vector2(1f, size - 2),
             new Vector2(size - 2, 1f),
-            new Vector2(size - 2, size - 2),
+
+            new Vector2(half, half),
 
             new Vector2(1f, half),
             new Vector2(half, 1f),
-            new Vector2(half, half),
+            new Vector2(size - 2, half),
             new Vector2(half, size - 2),
-            new Vector2(size - 2, half)
         };
 
         for(int i = 0; i < size; i++)
@@ -133,7 +135,7 @@ public class LoadMap : MonoBehaviour
             }    
         }
 
-        for(int i = 0; i < temp.Length; i++)
+        for(int i = 0; i < Players; i++)
         {
             var list = FindLocation(temp[i]);
 
