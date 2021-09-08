@@ -20,6 +20,10 @@ public class FollowPlayer : MonoBehaviour
 	public void Update()
 	{
 		if (player != null)
-			transform.position = player.transform.position + offset;
+		{
+			var target = player.transform.position + offset;
+			var unit = player.gameObject.GetComponent<PlayerUnit>();
+			transform.position = Vector3.Lerp(transform.position, target, unit.moveSpeed * Time.deltaTime);
+		}
 	}
 }
