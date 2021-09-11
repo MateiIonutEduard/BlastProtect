@@ -63,6 +63,14 @@ public class Gameplay : MonoBehaviour
         }
     }
 
+    public void NewGame()
+    {
+        SetValue("RoundId", 1);
+        var scene = SceneManager.GetActiveScene();
+        int index = scene.buildIndex;
+        SceneManager.LoadScene(index);
+    }
+
     private void DeleteValue(string key)
     {
         if (PlayerPrefs.HasKey(key))
