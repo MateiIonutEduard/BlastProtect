@@ -42,6 +42,13 @@ public class GameStart : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
+    public void InitGame()
+    {
+        PlayerPrefs.SetInt("players", Players);
+        PlayerPrefs.SetInt("rounds", Rounds);
+        PlayerPrefs.Save();
+    }
+
     public void OnRoundChanged()
     {
         Rounds = (int)RoundBar.value;
