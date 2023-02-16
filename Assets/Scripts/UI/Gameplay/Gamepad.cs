@@ -21,11 +21,11 @@ public class Gamepad : MonoBehaviour
 #if !UNITY_EDITOR && UNITY_WEBGL
           support = IsMobile();
 #endif
-#if UNITY_DESKTOP
-          support = Input.touchSupported;
+#if !UNITY_EDITOR && UNITY_DESKTOP
+        support = Input.touchSupported;
 #endif
-#if UNITY_ANDROID || UNITY_IOS
-          support = true;
+#if !UNITY_EDITOR && (UNITY_ANDROID || UNITY_IOS)
+        support = true;
 #endif
 
         return support;

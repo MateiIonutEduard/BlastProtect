@@ -4,24 +4,18 @@ using UnityEngine;
 
 public class Bonus : MonoBehaviour
 {
-    private float theta;
     public BonusType BonusType;
-    public bool IsRotated;
+    private Animator animator;
 
     public void Awake()
     {
-        theta = 0f;
+        animator = GetComponent<Animator>();
         transform.localScale = new Vector3(.75f, .75f, .75f);
     }
 
     public void FixedUpdate()
     {
-        float alpha = IsRotated ? -90f : 0f;
-        var axis = new Vector3(alpha, theta, 0f);
-        transform.rotation = Quaternion.Euler(axis);
-        theta += 3f;
-
-        if (theta >= 360) theta = 0;
+        animator.SetBool("Done", true);
     }
 
     public void OnTriggerEnter(Collider other)
@@ -30,6 +24,7 @@ public class Bonus : MonoBehaviour
         {
             Destroy(gameObject);
             var player = other.GetComponent<PlayerUnit>();
+            animator.SetBool("Done", false);
 
             switch(BonusType)
             {
