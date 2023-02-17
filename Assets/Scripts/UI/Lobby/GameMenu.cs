@@ -11,6 +11,7 @@ public class GameMenu : MonoBehaviour
     }
     public void QuitGame()
     {
+        MyPlayerPrefs.EndSession();
         Application.Quit();
     }
 

@@ -21,7 +21,8 @@ public class Bomb : MonoBehaviour
 
     private void Explode()
     {
-        AudioSource.PlayClipAtPoint(explosionSound, transform.position);
+        float volume = MyPlayerPrefs.GetVolume();
+        AudioSource.PlayClipAtPoint(explosionSound, transform.position, volume);
         Instantiate(explosionPrefab, transform.position, Quaternion.identity);
 
         StartCoroutine(CreateExplosions(Vector3.forward));
