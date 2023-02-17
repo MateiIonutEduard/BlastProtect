@@ -1,14 +1,9 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 
 public class Gamepad : MonoBehaviour
 {
-#if !UNITY_EDITOR && UNITY_WEBGL
-    [DllImport("__Internal")]
-    private static extern bool IsMobile();
-#endif
     public void Awake()
     {
         bool active = SupportTouch();
@@ -19,7 +14,7 @@ public class Gamepad : MonoBehaviour
     {
         bool support = false;
 #if !UNITY_EDITOR && UNITY_WEBGL
-          support = IsMobile();
+          support = Application.isMobilePlatform;
 #endif
 #if !UNITY_EDITOR && UNITY_DESKTOP
         support = Input.touchSupported;
