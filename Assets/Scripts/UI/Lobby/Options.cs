@@ -17,8 +17,9 @@ public class Options : MonoBehaviour
 
     public void Start()
     {
-        music = GetValue("music");
-        volume = GetValue("volume");
+        MyPlayerPrefs.BeginSession();
+        music = MyPlayerPrefs.GetMusic();
+        volume = MyPlayerPrefs.GetVolume();
 
         music_enabled = music > 0f;
         volume_enabled = volume > 0f;
@@ -37,48 +38,16 @@ public class Options : MonoBehaviour
         }
     }
 
-    public void OnMusicEnable()
-    {
-        if (music != 0f) music = -music;
-        else music = GetValue("music");
-        music_enabled = music > 0f;
-        SetState(0);
-    }
-
     public void OnMusicChanged()
     {
-        if (!music_enabled)
-        {
-            music = sliders[0].value;
-            UpdateState(0);
-        }
-        else
-        {
-            music = GetValue("music");
-            SetState(0);
-        }
-    }
-
-    public void OnVolumeEnable()
-    {
-        if (volume != 0f) volume = -volume;
-        else volume = GetValue("volume");
-        volume_enabled = volume > 0f;
-        SetState(1);
+        music = sliders[0].value;
+        UpdateState(0);
     }
 
     public void OnVolumeChanged()
     {
-        if (volume_enabled)
-        {
-            volume = sliders[1].value;
-            UpdateState(1);
-        }
-        else
-        {
-            volume = GetValue("volume");
-            SetState(1);
-        }
+        volume = sliders[1].value;
+        UpdateState(1);
     }
 
     private void UpdateState(int index)
@@ -86,12 +55,12 @@ public class Options : MonoBehaviour
         if (index == 0)
         {
             all[index].image.sprite = music <= 0f ? list[1] : list[0];
-            SetValue("music", music);
+            MyPlayerPrefs.SetMusic(music);
         }
         else
         {
             all[index].image.sprite = volume <= 0f ? list[3] : list[2];
-            SetValue("volume", volume);
+            MyPlayerPrefs.SetVolume(volume);
         }
     }
 
@@ -101,26 +70,13 @@ public class Options : MonoBehaviour
         {
             all[index].image.sprite = music <= 0f ? list[1] : list[0];
             sliders[index].value = music <= 0f ? 0f : music;
-            SetValue("music", music);
+            MyPlayerPrefs.SetMusic(music);
         }
         else
         {
             all[index].image.sprite = volume <= 0f ? list[3] : list[2];
             sliders[index].value = volume <= 0f ? 0f : volume;
-            SetValue("volume", volume);
+            MyPlayerPrefs.SetVolume(volume);
         }
-    }
-
-    private float GetValue(string key)
-    {
-        if (!PlayerPrefs.HasKey(key)) return .5f;
-        else return PlayerPrefs.GetFloat(key);
-    }
-
-    private void SetValue(string key, float val)
-    {
-        if (PlayerPrefs.HasKey(key)) PlayerPrefs.DeleteKey(key);
-        PlayerPrefs.SetFloat(key, val);
-        PlayerPrefs.Save();
     }
 }
