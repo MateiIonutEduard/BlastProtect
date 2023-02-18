@@ -21,8 +21,9 @@ public class LoadMap : MonoBehaviour
     {
         BombList = new List<Bomb>();
         blocks = transform.GetChild(0).gameObject;
+
         floor = transform.GetChild(1).gameObject;
-        Players = PlayerPrefs.GetInt("players");
+        Players = MyPlayerPrefs.GetPlayers();
 
         if (Players == 0) Application.Quit(0);
         size = Players <= 4 ? 13 : 15;
