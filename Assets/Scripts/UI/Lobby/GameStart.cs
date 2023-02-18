@@ -20,9 +20,6 @@ public class GameStart : MonoBehaviour
     {
         Players = 2;
         Rounds = 1;
-
-        if (PlayerPrefs.HasKey("players")) PlayerPrefs.DeleteKey("players");
-        if (PlayerPrefs.HasKey("rounds")) PlayerPrefs.DeleteKey("rounds");
     }
 
     public void Update()
@@ -36,17 +33,15 @@ public class GameStart : MonoBehaviour
 
     public void OnGameStart()
     {
-        PlayerPrefs.SetInt("players", Players);
-        PlayerPrefs.SetInt("rounds", Rounds);
-        PlayerPrefs.Save();
+        MyPlayerPrefs.SetPlayers(Players);
+        MyPlayerPrefs.SetRounds(Rounds);
         SceneManager.LoadScene(1);
     }
 
     public void InitGame()
     {
-        PlayerPrefs.SetInt("players", Players);
-        PlayerPrefs.SetInt("rounds", Rounds);
-        PlayerPrefs.Save();
+        MyPlayerPrefs.SetPlayers(Players);
+        MyPlayerPrefs.SetRounds(Rounds);
     }
 
     public void OnRoundChanged()

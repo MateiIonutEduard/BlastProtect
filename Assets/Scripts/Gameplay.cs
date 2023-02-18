@@ -13,15 +13,8 @@ public class Gameplay : MonoBehaviour
 
     public void GameStart()
     {
-        int roundId = GetValue("RoundId");
-
-        if(roundId == 0)
-        {
-            roundId = 1;
-            SetValue("RoundId", roundId);
-        }
-
-        int levels = GetValue("rounds");
+        int roundId = MyPlayerPrefs.GetLevel();
+        int levels = MyPlayerPrefs.GetLevels();
         round.text = $"{roundId}/{levels}";
 
         var agents = FindObjectsOfType<PlayerUnit>();
@@ -44,50 +37,32 @@ public class Gameplay : MonoBehaviour
         }
 
         if (index != -1) score[index]++;
-        int roundId = GetValue("RoundId");
+        int roundId = MyPlayerPrefs.GetLevel();
 
-        int rounds = GetValue("rounds");
+        int rounds = MyPlayerPrefs.GetLevels();
         var scene = SceneManager.GetActiveScene();
         int id = scene.buildIndex;
 
         if (roundId < rounds)
         {
             roundId++;
-            SetValue("RoundId", roundId);
+            MyPlayerPrefs.SetLevel(roundId);
             SceneManager.LoadScene(id);
         }
         else
         {
-            DeleteValue("RoundId");
+            MyPlayerPrefs.SetLevel(1);
             SceneManager.LoadScene(id - 1);
         }
     }
 
     public void NewGame()
     {
-        SetValue("RoundId", 1);
+        MyPlayerPrefs.SetLevel(1);
         var scene = SceneManager.GetActiveScene();
+
         int index = scene.buildIndex;
         SceneManager.LoadScene(index);
-    }
-
-    private void DeleteValue(string key)
-    {
-        if (PlayerPrefs.HasKey(key))
-            PlayerPrefs.DeleteKey(key);
-    }
-
-    private int GetValue(string key)
-    {
-        if (!PlayerPrefs.HasKey(key)) return 0;
-        return PlayerPrefs.GetInt(key);
-    }
-
-    private void SetValue(string key, int value)
-    {
-        if (PlayerPrefs.HasKey(key)) PlayerPrefs.DeleteKey(key);
-        PlayerPrefs.SetInt(key, value);
-        PlayerPrefs.Save();
     }
 
     public void KillAgent(int PlayerId)
