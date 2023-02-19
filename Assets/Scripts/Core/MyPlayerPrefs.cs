@@ -8,9 +8,17 @@ public class MyPlayerPrefs
 {
     static float music = 0f;
     static float volume = 0f;
+
     static int level = 1;
     static int levels = 1;
+
     static int players;
+    static bool[] state;
+    static byte[] score;
+
+    static int PlayerId;
+    static bool GameOver;
+    static int deaths;
 
     public static void BeginSession()
     {
@@ -36,6 +44,21 @@ public class MyPlayerPrefs
         }
     }
 
+    static void CreateDashboard()
+    {
+        state = new bool[players];
+        score = new byte[players];
+        deaths = 0;
+
+        for (int k = 0; k < players; k++)
+        {
+            score[k] = 0;
+            state[k] = false;
+        }
+    }
+
+    public static void SetPlayerId(int playerId) => PlayerId = playerId;
+
     public static void SetMusic(float percent)
     {
         float ratio = (float)Math.Round(percent * 100f);
@@ -52,7 +75,47 @@ public class MyPlayerPrefs
 
     public static void SetRounds(int rounds) => levels = rounds;
 
-    public static void SetPlayers(int count) => players = count;
+    public static void SetPlayers(int count)
+    {
+        players = count;
+        CreateDashboard();
+    }
+
+    public static bool IsGameOver() => GameOver;
+
+    public static void SetGameOver(bool state) => GameOver = state;
+
+    public static void IncreaseScore()
+    {
+        int index = -1;
+
+        if (!GameOver)
+        {
+            for (int i = 0; i < state.Length; i++)
+            {
+                if (!state[i])
+                {
+                    index = i;
+                    break;
+                }
+            }
+
+            if (index != -1)
+                score[index]++;
+        }
+    }
+
+    public static int GetPlayerId() => PlayerId;
+
+    public static void KillAgent(Action action, int PlayerId)
+    {
+        deaths++;
+        int index = PlayerId - 1;
+        if (!state[index]) state[index] = true;
+        if (deaths >= state.Length - 1) action();
+    }
+
+    public static byte[] GetDashboard() => score;
 
     public static float GetMusic() => music;
 

@@ -21,6 +21,7 @@ public class LoadMap : MonoBehaviour
     {
         BombList = new List<Bomb>();
         blocks = transform.GetChild(0).gameObject;
+        PlayerId = MyPlayerPrefs.GetPlayerId();
 
         floor = transform.GetChild(1).gameObject;
         Players = MyPlayerPrefs.GetPlayers();
