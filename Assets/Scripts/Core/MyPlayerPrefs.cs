@@ -78,7 +78,7 @@ public class MyPlayerPrefs
     public static void SetPlayers(int count)
     {
         players = count;
-        CreateDashboard();
+        if(level < 2) CreateDashboard();
     }
 
     public static bool IsGameOver() => GameOver;
@@ -100,6 +100,9 @@ public class MyPlayerPrefs
                 }
             }
 
+            for (int j = 0; j < players; j++)
+                state[j] = false;
+
             if (index != -1)
                 score[index]++;
         }
@@ -112,7 +115,12 @@ public class MyPlayerPrefs
         deaths++;
         int index = PlayerId - 1;
         if (!state[index]) state[index] = true;
-        if (deaths >= state.Length - 1) action();
+
+        if (deaths >= state.Length - 1)
+        {
+            deaths = 0;
+            action();
+        }
     }
 
     public static byte[] GetDashboard() => score;
