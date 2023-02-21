@@ -10,6 +10,7 @@ public class Bomb : MonoBehaviour
 
     public LayerMask levelMask;
     private bool exploded = false;
+    public int PlayerId;
 
     public int explode_size = 2;
     public PlayerUnit player;
@@ -78,6 +79,8 @@ public class Bomb : MonoBehaviour
         foreach (Vector3 position in list)
         {
             var obj = Instantiate(explosionPrefab, position, explosionPrefab.transform.rotation);
+            var script = obj.GetComponent<DestroySelf>();
+            script.EnemyId = PlayerId;
             yield return new WaitForSeconds(.05f);
         }
     }

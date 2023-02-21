@@ -17,6 +17,9 @@ public class MyPlayerPrefs
     static byte[] score;
 
     static int PlayerId;
+    static int[] enemies;
+    static int EnemyId;
+
     static bool GameOver;
     static int deaths;
 
@@ -58,6 +61,20 @@ public class MyPlayerPrefs
     }
 
     public static void SetPlayerId(int playerId) => PlayerId = playerId;
+
+    public static void SetFollowers()
+    {
+        enemies = new int[players];
+
+        EnemyId = 0;
+        enemies[EnemyId++] = PlayerId;
+    }
+
+    public static void SetEnemyId(int enemyId)
+    {
+        if (EnemyId < players) 
+            enemies[EnemyId++] = enemyId;
+    }
 
     public static void SetMusic(float percent)
     {
@@ -110,6 +127,8 @@ public class MyPlayerPrefs
 
     public static int GetPlayerId() => PlayerId;
 
+    public static int GetEnemyId() => enemies[EnemyId - 1];
+
     public static void KillAgent(Action action, int PlayerId)
     {
         deaths++;
@@ -122,6 +141,10 @@ public class MyPlayerPrefs
             action();
         }
     }
+
+    public static int GetScore(int player) => score[player - 1];
+
+    public static bool IsAlive(int playerId) => !state[playerId - 1];
 
     public static byte[] GetDashboard() => score;
 

@@ -74,7 +74,6 @@ public class LoadMap : MonoBehaviour
             {
                 var obj = player.GetComponent<PlayerController>();
                 var follow = FindObjectOfType<FollowPlayer>();
-                follow.player = obj;
                 follow.offset = new Vector3(-1, 9, -4);
             }
         }

@@ -109,6 +109,7 @@ public class PlayerController : MonoBehaviour
             obj.GetComponent<Bomb>().player = player;
 
             var bomb = obj.GetComponent<Bomb>();
+            bomb.PlayerId = player.PlayerId;
             bombs.Add(bomb);
 
             if(player.canKick) obj.GetComponent<Rigidbody>().isKinematic = false;

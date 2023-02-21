@@ -12,7 +12,9 @@ public class Gameplay : MonoBehaviour
     {
         int roundId = MyPlayerPrefs.GetLevel();
         int levels = MyPlayerPrefs.GetLevels();
+
         round.text = $"{roundId}/{levels}";
+        MyPlayerPrefs.SetFollowers();
     }
 
     public void GameEnd()

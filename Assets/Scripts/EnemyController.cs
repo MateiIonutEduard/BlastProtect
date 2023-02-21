@@ -634,6 +634,7 @@ public class EnemyController : MonoBehaviour
 
             player.bombs--;
             var temp = obj.GetComponent<Bomb>();
+            temp.PlayerId = player.PlayerId;
             bombs.Add(temp);
 
             obj.GetComponent<Bomb>().explode_size = player.explosion_power;
