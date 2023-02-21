@@ -40,7 +40,10 @@ public class GameStart : MonoBehaviour
 
     public void InitGame()
     {
+        int playerId = Random.Range(0, Players) + 1;
         MyPlayerPrefs.SetPlayers(Players);
+
+        MyPlayerPrefs.SetPlayerId(playerId);
         MyPlayerPrefs.SetRounds(Rounds);
     }
 

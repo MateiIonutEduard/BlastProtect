@@ -21,6 +21,7 @@ public class LoadMap : MonoBehaviour
     {
         BombList = new List<Bomb>();
         blocks = transform.GetChild(0).gameObject;
+        PlayerId = MyPlayerPrefs.GetPlayerId();
 
         floor = transform.GetChild(1).gameObject;
         Players = MyPlayerPrefs.GetPlayers();
@@ -73,7 +74,6 @@ public class LoadMap : MonoBehaviour
             {
                 var obj = player.GetComponent<PlayerController>();
                 var follow = FindObjectOfType<FollowPlayer>();
-                follow.player = obj;
                 follow.offset = new Vector3(-1, 9, -4);
             }
         }

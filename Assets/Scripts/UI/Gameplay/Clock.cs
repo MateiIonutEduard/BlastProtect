@@ -8,24 +8,26 @@ public class Clock : MonoBehaviour
 {
     public TMP_Text clock;
     private float totalTime;
-    public bool GameOver;
+    private Gameplay game;
 
     void Start()
     {
         totalTime = 300f;
-        GameOver = false;
+        MyPlayerPrefs.SetGameOver(false);
+        game = FindObjectOfType<Gameplay>();
     }
 
     public void Update()
     {
-        if (!GameOver)
+        if (!MyPlayerPrefs.IsGameOver())
         {
             if (totalTime > 0f)
                 totalTime -= Time.deltaTime;
             else
             {
                 totalTime = 0;
-                GameOver = true;
+                MyPlayerPrefs.SetGameOver(true);
+                game.GameEnd();
             }
 
             int minutes = (int)totalTime / 60;
