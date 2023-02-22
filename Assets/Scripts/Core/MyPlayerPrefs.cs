@@ -142,8 +142,6 @@ public class MyPlayerPrefs
         }
     }
 
-    public static int GetScore(int player) => score[player - 1];
-
     public static bool IsAlive(int playerId) => !state[playerId - 1];
 
     public static byte[] GetDashboard() => score;

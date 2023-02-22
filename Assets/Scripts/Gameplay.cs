@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class Gameplay : MonoBehaviour
 {
     public Text round;
+    public GameObject Dashboard;
 
     public void GameStart()
     {
@@ -33,11 +34,7 @@ public class Gameplay : MonoBehaviour
             SceneManager.LoadScene(id);
         }
         else
-        {
-            byte[] scores = MyPlayerPrefs.GetDashboard();
-            MyPlayerPrefs.SetLevel(1);
-            SceneManager.LoadScene(id - 1);
-        }
+            Dashboard.SetActive(true);
     }
 
     public void NewGame()
