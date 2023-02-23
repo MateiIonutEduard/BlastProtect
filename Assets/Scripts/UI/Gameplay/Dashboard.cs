@@ -11,8 +11,7 @@ public class Dashboard : MonoBehaviour
 
     public void OnEnable()
     {
-        Board.SetActive(false);
-        FindObjectOfType<Clock>().enabled = false;
+        DestroyWorld();
         ShowDashboard();
     }
 
@@ -20,6 +19,19 @@ public class Dashboard : MonoBehaviour
     {
         for (int i = 0; i < gameObjects.Length; i++)
             gameObjects[i].SetActive(false);
+    }
+
+    private void DestroyWorld()
+    {
+        Board.SetActive(false);
+        FindObjectOfType<Clock>().enabled = false;
+        var enemies = FindObjectsOfType<PlayerUnit>();
+
+        foreach(var enemy in enemies)
+        {
+            if (enemy.gameObject != null)
+                Destroy(enemy.gameObject);
+        }
     }
 
     public void QuitGame()
