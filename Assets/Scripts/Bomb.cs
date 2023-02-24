@@ -14,6 +14,13 @@ public class Bomb : MonoBehaviour
 
     public int explode_size = 2;
     public PlayerUnit player;
+    private AudioSource audioSource;
+
+    public void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+        audioSource.volume = MyPlayerPrefs.GetVolume();
+    }
 
     public void Start()
     {
