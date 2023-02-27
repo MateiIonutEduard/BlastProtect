@@ -77,25 +77,6 @@ public class LoadMap : MonoBehaviour
         }
     }
 
-    private Vector2[] FindLocation(Vector2 pos)
-    {
-        int[] v = new int[] { -1, 0, 1 };
-        var list = new List<Vector2>();
-
-        for(int i = 0; i < v.Length; i++)
-        {
-            for(int j = 0; j < v.Length; j++)
-            {
-                var point = new Vector2(pos.x + v[i], pos.y + v[j]);
-
-                if (point.x > 0 && point.y > 0)
-                    list.Add(point);
-            }
-        }
-
-        return list.ToArray();
-    }
-
     private void LoadGame()
     {
         for(int i = 0; i < size; i++)
