@@ -259,7 +259,7 @@ public class EnemyController : MonoBehaviour
             foreach (Distance d in FindNearCollisions(currentpos))
             {
                 Vector3 temp_pos = Round(currentpos + d.dir);
-                if (temp.CanWalk((int)temp_pos.x, (int)temp_pos.z))
+                if (MyCustomMap.CanWalk((int)temp_pos.x, (int)temp_pos.z))
                 {
                     if (Math.Abs(goal.x - temp_pos.x) < Math.Abs(goal.x - currentpos.x) ||
                     Math.Abs(goal.z - temp_pos.z) < Math.Abs(goal.z - currentpos.z))
@@ -289,7 +289,7 @@ public class EnemyController : MonoBehaviour
         {
             Vector3 test = new Vector3(UnityEngine.Random.Range(1, m.size - 1), 0, UnityEngine.Random.Range(1, m.size - 1));
 
-            if (m.CanWalk((int)test.x, (int)test.z))
+            if (MyCustomMap.CanWalk((int)test.x, (int)test.z))
             {
                 found = true;
                 res = test;

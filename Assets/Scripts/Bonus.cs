@@ -42,5 +42,10 @@ public class Bonus : MonoBehaviour
                     break;
             }
         }
+        else if(other.CompareTag("Explosion"))
+        {
+            var box = other.gameObject.GetComponent<BoxCollider>();
+            if (box.isTrigger) Destroy(gameObject);
+        }
     }
 }
