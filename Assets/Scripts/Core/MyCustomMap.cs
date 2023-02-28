@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MyCustomMap
 {
+    static PowerUp[] PowersUp;
     static Block[] map;
     static int size;
 
@@ -67,6 +68,111 @@ public class MyCustomMap
                 map[index] = Block.Wall;
             }
         }
+
+        GenItems(mapSize);
+    }
+
+    static void GenItems(int mapSize)
+    {
+        if(mapSize == 15)
+            GenItems(new int[] { 14, 10, 12 }, 2);
+        else
+            GenItems(new int[] { 12, 8, 10 }, 2);
+    }
+
+    static void GenItems(int[] powersUp, int distance)
+    {
+        int count = 0;
+        int len = powersUp.Length;
+
+        var list = new List<PowerUp>();
+        bool done = false;
+
+        var items = new Queue<BonusType>();
+        int[] g = new int[len];
+
+        for (int i = 0; i < len; i++)
+        {
+            g[i] = powersUp[i];
+            count += g[i];
+        }
+
+        while(count > 0)
+        {
+            int index = Random.Range(0, (int)BonusType.Bombs);
+
+            if (g[index] > 0)
+            {
+                items.Enqueue((BonusType)(index + 1));
+                g[index]--;
+                count--;
+            }
+        }
+
+        while(items.Count > 0)
+        {
+            int dx = Random.Range(0, size);
+            int dy = Random.Range(0, size);
+
+            int index = dx * size + dy;
+             done = false;
+
+            do
+            {
+                if (map[index] == Block.Breakable)
+                {
+                    done = true;
+
+                    for(int j = 0; j < list.Count; j++)
+                    {
+                        int diff = (int)Mathf.Abs(list[j].Location.x - dx);
+                        diff += (int)Mathf.Abs(list[j].Location.z - dy);
+
+                        if (diff < distance)
+                        {
+                            done = false;
+                            break;
+                        }
+                    }
+
+                    if(done)
+                    {
+                        BonusType bonusType = items.Dequeue();
+
+                        var powerUp = new PowerUp
+                        {
+                            BonusType = bonusType,
+                            Location = new Vector3(dx, .5f, dy)
+                        };
+
+                        list.Add(powerUp);
+                    }
+                }
+
+                dx = Random.Range(0, size);
+                dy = Random.Range(0, size);
+                index = dx * size + dy;
+            }
+            while (!done);
+        }
+
+        PowersUp = list.ToArray();
+    }
+
+    public static int GetItem(Vector3 position)
+    {
+        int index = -1;
+
+        for(int i = 0; i < PowersUp.Length; i++)
+        {
+            if(Vector3.Distance(position, PowersUp[i].Location) == 0)
+            {
+                index = i;
+                break;
+            }
+        }
+
+        return index > 0 ? (int)PowersUp[index].BonusType : -1;
     }
 
     public static Block GetBlock(int j, int k)

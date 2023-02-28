@@ -12,11 +12,10 @@ public class Brick : MonoBehaviour
         if (Collide)
         {
             Instantiate(list[3], transform.position, Quaternion.identity);
-            if (Random.Range(0.0f, 1.0f) > 0.5f)
-            {
-                int index = Random.Range(0, 3);
-                Instantiate(list[index], transform.position, Quaternion.identity);
-            }
+            int item = MyCustomMap.GetItem(transform.position);
+
+            if (item >= 0)
+                Instantiate(list[item - 1], transform.position, Quaternion.identity);
 
             Destroy(gameObject);
         }
