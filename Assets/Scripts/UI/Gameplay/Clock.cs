@@ -12,7 +12,7 @@ public class Clock : MonoBehaviour
 
     void Start()
     {
-        totalTime = 300f;
+        totalTime = 180f;
         MyPlayerPrefs.SetGameOver(false);
         game = FindObjectOfType<Gameplay>();
     }
